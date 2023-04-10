@@ -26,9 +26,9 @@ public class Server {
 
     /**
      *
-     * Le constructeur de la classe Server
-     * @param port Le port sur lequel le serveur écoute
-     * @throws IOException lancé si une erreur arrive avec les entrées/sorties
+     * Constructeur de la classe Server
+     * @param port: Port sur lequel le serveur écoute
+     * @throws IOException: Lancée si une erreur arrive avec les entrées/sorties
      *
      */
 
@@ -40,8 +40,8 @@ public class Server {
 
     /**
      *
-     * Cette méthode ajoute un EventHandler à la liste handlers
-     * @param h instance du type EventHandler qui serait ajoutée
+     * La méthode addEventHandler ajoute un EventHandler à la liste handlers
+     * @param h: Instance du type EventHandler qui serait ajoutée
      *
      */
 
@@ -58,9 +58,9 @@ public class Server {
 
     /**
      *
-     * La méthode run serait appelée quand si on veut executer le programme , elle va attendre la connexion d'un client
-     * puis va imprimer un message et créer un ObjectInputStream et ObjectOutputStream puis appelle les deux méthodes
-     * listen et puis disconnect
+     * La méthode run serait appelée quand on veut exécuter le programme. Elle attend la connexion d'un client,
+     * imprime un message, crée un ObjectInputStream et ObjectOutputStream et appelle les deux méthodes
+     * listen et disconnect.
      *
      */
 
@@ -82,11 +82,11 @@ public class Server {
 
     /**
      *
-     * La méthode listen chéque si la ligne de commande n'est pas nul et si c'est le cas et appelle la méthode
-     * processCommandLine, découpe le Pair retourné aux variables cmd(Key) et arg(Value)
-     * puis passe cmd et arg à la méthode privée alertHandlers
-     * @throws IOException lancé si une erreur arrive avec les entrées/sorties
-     * @throws ClassNotFoundException lancé si on essaye d'accéder une classe qui n'existe pas
+     * La méthode listen vérifie si la ligne de commande n'est pas null. Si c'est le cas, elle appelle la méthode
+     * processCommandLine, découpe le Pair retourné aux variables cmd(Key) et arg(Value),
+     * et passe cmd et arg à la méthode privée alertHandlers.
+     * @throws IOException: lancée si une erreur arrive avec les entrées/sorties
+     * @throws ClassNotFoundException: lancée si on essaye d'accéder une classe qui n'existe pas
      *
      */
 
@@ -104,8 +104,8 @@ public class Server {
      *
      * La méthode Pair découpe la commande donnée et donne à la variable cmd le premier mot(= séries de caractères
      * séparés par des espaces) et le reste serait assigné à la variable args
-     * @param line à découper
-     * @return un Pair des deux variables cmd et args
+     * @param line: ligne de texte à découper
+     * @return Pair des deux variables cmd et args
      *
      */
 
@@ -118,8 +118,8 @@ public class Server {
 
     /**
      *
-     * La méthode disconnect est appelée si listen a été épuisée , et ferme les Streams et le client.
-     * @throws IOException lancé si une erreur arrive avec les entrées/sorties
+     * La méthode disconnect est appelée si listen a été épuisée et ferme les Streams et le client.
+     * @throws IOException: Lancée si une erreur arrive avec les entrées/sorties
      *
      */
 
@@ -131,11 +131,11 @@ public class Server {
 
     /**
      *
-     * La méthode handleEvents va voir si cmd passée est soit REGISTER_COMMAND soit LOAD_COMMAND , si c'est le
-     * cas , elle va appeler la méthode correspondante (handleLoadCourses et handleRegistration respectivement)
-     * en passant arg si nécessaire(dans le cas de handleLoadCourses).
-     * @param cmd La commande du event spécifié
-     * @param arg L'argument de la commande de l'event spécifié
+     * La méthode handleEvents va voir si cmd passée est soit REGISTER_COMMAND, soit LOAD_COMMAND. Si c'est le
+     * cas, elle va appeler la méthode correspondante (handleLoadCourses et handleRegistration respectivement)
+     * en passant arg si nécessaire (dans le cas de handleLoadCourses).
+     * @param cmd: Commande du event spécifié
+     * @param arg: Argument de la commande de l'event spécifié
      *
      */
 
