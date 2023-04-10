@@ -1,11 +1,13 @@
-package server;
+import models.Course;
+import models.RegistrationForm;
 
 import javafx.util.Pair;
-import server.models.Course;
 
 import java.io.*;
+
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -159,22 +161,22 @@ public class Server {
     public void handleLoadCourses(String arg)  {
         int i ;
         try{
-            ArrayList<Course> courseList = new ArrayList<Course>();
+            ArrayList<Course> courseList = new ArrayList<>();
             Scanner scan = new Scanner(new File("cours.txt"));
             while (scan.hasNext()){
                 String s = scan.nextLine();
                 String[] fields = s.split("\t");
                 Course c = new Course(fields[0] , fields[1] , fields[2]);
 
-                if (arg == c.getSession()) {
+                if (arg.equals(c.getSession())) {
                     courseList.add(c);
                 }
 
-            FileOutputStream fos = new FileOutputStream("courses.dat"); //Demande une question sur ca
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            for (i=0 ; i<courseList.size() ; i++) {
-                oos.writeObject(c);
-            }
+                FileOutputStream fos = new FileOutputStream("courses.dat"); // Poser une question sur ça
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                for (i=0 ; i<courseList.size() ; i++) {
+                    oos.writeObject(c);
+                }
 
             }
 
@@ -182,7 +184,7 @@ public class Server {
         } catch (FileNotFoundException e ) {
             throw new RuntimeException(e);
         } catch (IOException e){
-            System.out.println("erreur lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.");
+            System.out.println("Erreur lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.");
         }
     }
 
@@ -192,7 +194,20 @@ public class Server {
      La méthode gére les exceptions si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
      */
     public void handleRegistration() {
-        // TODO: implémenter cette méthode
+        try {
+            InputStream is = client.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(is);
+            RegistrationForm registrationForm = (RegistrationForm) ois.readObject();
+
+            FileOutputStream fileOs = new FileOutputStream("registration.dat");
+            ObjectOutputStream os = new ObjectOutputStream(fileOs);
+            os.writeObject(registrationForm);
+            os.close();
+        } catch (ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        } catch (IOException ex) {
+            System.out.println("Erreur à l'écriture");
+        }
     }
 }
 
