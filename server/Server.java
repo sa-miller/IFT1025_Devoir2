@@ -150,7 +150,7 @@ public class Server {
     }
 
     /**
-     Lire un fichier texte contenant des informations sur les cours et les transofmer en liste d'objets 'Course'.
+     Lire un fichier texte contenant des informations sur les cours et les transformer en liste d'objets 'Course'.
      La méthode filtre les cours par la session spécifiée en argument.
      Ensuite, elle renvoie la liste des cours pour une session au client en utilisant l'objet 'objectOutputStream'.
      La méthode gère les exceptions si une erreur se produit lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.
@@ -159,32 +159,29 @@ public class Server {
      */
 
     public void handleLoadCourses(String arg)  {
-        int i ;
         try{
-            ArrayList<Course> courseList = new ArrayList<>();
-            Scanner scan = new Scanner(new File("cours.txt"));
-            while (scan.hasNext()){
+            ArrayList<Course> courseList = new ArrayList<Course>();
+            Scanner scan = new Scanner(new File("src/main/java/server/data/cours.txt"));
+            while (true) {
                 String s = scan.nextLine();
                 String[] fields = s.split("\t");
-                Course c = new Course(fields[0] , fields[1] , fields[2]);
-
-                if (arg.equals(c.getSession())) {
+                Course c = new Course(fields[0], fields[1], fields[2]);
+                if (arg.equals(fields[2])) {
                     courseList.add(c);
                 }
-
-                FileOutputStream fos = new FileOutputStream("courses.dat"); // Poser une question sur ça
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                for (i=0 ; i<courseList.size() ; i++) {
-                    oos.writeObject(c);
+                if (!scan.hasNext()) {
+                    break;
                 }
-
             }
+            objectOutputStream.writeObject(courseList);
+
+
 
 
         } catch (FileNotFoundException e ) {
             throw new RuntimeException(e);
         } catch (IOException e){
-            System.out.println("Erreur lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.");
+            System.out.println("erreur lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.");
         }
     }
 
