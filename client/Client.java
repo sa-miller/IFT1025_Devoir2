@@ -1,58 +1,57 @@
-package client;
+package main.java.client;
 
 import java.io.*;
+
 import java.net.Socket;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
-
-    private final Socket client ;
-    private ObjectOutputStream oos ;
-    private ObjectInputStream ois;
+    private final ObjectOutputStream oos ;
+    private final ObjectInputStream ois;
     private String arg;
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     public Client(String address , int port) throws IOException {
-        this.client = new Socket(address, port);
+        Socket client = new Socket(address, port);
         this.oos = new ObjectOutputStream(client.getOutputStream());
         this.ois = new ObjectInputStream(client.getInputStream());
     }
 
-    public void run () throws IOException, ClassNotFoundException {
-        System.out.println(" *** Bienvenue au portail d'inscription de cours de l'UdeM ***");
-        System.out.println("Veuillez choisir la session pour laquelle vous voulez consulter la liste des cours:");
-        System.out.println("1.Automne");
-        System.out.println("2.Hiver");
-        System.out.println("3.Ete");
-        System.out.print("> Choix:");
-        while (scanner.hasNext()) {
-            int temp = scanner.nextInt();
-            //String arg = Integer.toString(temp);
-            argValue(temp);
-            oos.writeObject("CHARGER " + arg);
-            oos.flush();
-            printCourses();
-        }
-        oos.close();
-        scanner.close();
+    public boolean run() throws IOException, ClassNotFoundException {
+        System.out.println("*** Bienvenue au portail d'inscription de cours de l'UdeM ***");
+        System.out.println("""
+                Veuillez choisir la session pour laquelle vous voulez consulter la liste des cours:");
+                1.Automne
+                2.Hiver
+                3.Ete""");
+        System.out.print("> Choix: ");
+        int temp = scanner.nextInt();
+        argValue(temp);
+        System.out.println("Les cours offerts pendant la session d'" + arg.toLowerCase() +" sont:");
+        oos.writeObject("CHARGER " + arg);
+        oos.flush();
+        printCourses();
 
+        oos.close();
+
+        return true;
     }
 
-    public String argValue(int temp) {
-        switch(temp){
-            case 1 :
-                return arg = "Automne";
-            case 2 :
-                return arg = "Hiver";
-            case 3 :
-                return arg = "Ete";
+    public void argValue(int temp) {
+        switch (temp) {
+            case 1 -> arg = "Automne";
+            case 2 -> arg = "Hiver";
+            case 3 -> arg = "Ete";
         }
-        return null;
     }
 
     public void printCourses() throws IOException, ClassNotFoundException {
-        System.out.println(ois.readObject());
-
+        ArrayList<Object> courses = (ArrayList<Object>) ois.readObject();
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println((i + 1) + ". " + courses.get(i).toString());
+        }
     }
 
 }

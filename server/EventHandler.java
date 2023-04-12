@@ -1,3 +1,5 @@
+package main.java.server;
+
 /**
  * L'interface fonctionnelle EventHandler définit la méthode qui traite les événements.
  */

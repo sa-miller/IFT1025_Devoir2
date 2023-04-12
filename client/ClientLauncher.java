@@ -1,6 +1,4 @@
-package client ;
-
-import server.Server;
+package main.java.client;
 
 public class ClientLauncher {
 
@@ -10,8 +8,12 @@ public class ClientLauncher {
     public static void main(String[] args) {
         Client client;
         try {
-            client = new Client(ADDRESS,PORT);
-            client.run();
+            boolean reconnect = true;
+
+            while (reconnect) {
+                client = new Client(ADDRESS,PORT);
+                reconnect = client.run();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

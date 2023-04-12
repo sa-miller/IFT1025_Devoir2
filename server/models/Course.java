@@ -1,4 +1,4 @@
-package server.models;
+package main.java.server.models;
 
 import java.io.Serializable;
 
@@ -40,10 +40,6 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "name=" + name +
-                ", code=" + code +
-                ", session=" + session +
-                '}';
+        return name + "\t" + code;
     }
 }

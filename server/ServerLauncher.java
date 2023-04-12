@@ -1,3 +1,5 @@
+package main.java.server;
+
 /**
  * ServerLauncher définit les variables et méthodes nécessaires pour lancer le serveur.
  * Elle contient donc la méthode main.

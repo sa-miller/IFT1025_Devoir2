@@ -1,5 +1,7 @@
-import models.Course;
-import models.RegistrationForm;
+package main.java.server;
+
+import main.java.server.models.Course;
+import main.java.server.models.RegistrationForm;
 
 import javafx.util.Pair;
 
@@ -160,46 +162,38 @@ public class Server {
 
     public void handleLoadCourses(String arg)  {
         try{
-            ArrayList<Course> courseList = new ArrayList<Course>();
+            ArrayList<Course> courseList = new ArrayList<>();
             Scanner scan = new Scanner(new File("src/main/java/server/data/cours.txt"));
-            while (true) {
+            do {
                 String s = scan.nextLine();
                 String[] fields = s.split("\t");
                 Course c = new Course(fields[0], fields[1], fields[2]);
                 if (arg.equals(fields[2])) {
                     courseList.add(c);
                 }
-                if (!scan.hasNext()) {
-                    break;
-                }
-            }
+            } while (scan.hasNext());
             objectOutputStream.writeObject(courseList);
-
-
-
-
-        } catch (FileNotFoundException e ) {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e){
-            System.out.println("erreur lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.");
+            System.out.println("Erreur lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.");
         }
     }
 
     /**
      Récupérer l'objet 'RegistrationForm' envoyé par le client en utilisant 'objectInputStream', l'enregistrer dans un fichier texte
      et renvoyer un message de confirmation au client.
-     La méthode gére les exceptions si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
+     La méthode gère les exceptions si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
      */
     public void handleRegistration() {
         try {
-            InputStream is = client.getInputStream();
-            ObjectInputStream ois = new ObjectInputStream(is);
-            RegistrationForm registrationForm = (RegistrationForm) ois.readObject();
+            RegistrationForm registrationForm = (RegistrationForm) objectInputStream.readObject();
+            Course course = registrationForm.getCourse();
 
-            FileOutputStream fileOs = new FileOutputStream("registration.dat");
-            ObjectOutputStream os = new ObjectOutputStream(fileOs);
-            os.writeObject(registrationForm);
-            os.close();
+            FileOutputStream fileOutputStream = new FileOutputStream("src/main/java/server/data/cours.txt");
+            DataOutputStream output = new DataOutputStream(fileOutputStream);
+
+            output.writeBytes(course.getSession());
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         } catch (IOException ex) {
