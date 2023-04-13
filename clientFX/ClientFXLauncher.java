@@ -13,17 +13,14 @@ public class ClientFXLauncher extends Application {
 
     public static void main(String[] args) throws IOException {
         launch(args);
-
-        ClientFX clientFX = new ClientFX(ADDRESS, PORT);
-
     }
     @Override
     public void start(Stage stage) throws Exception {
-        Modele leModele = new Modele();
+        Modele leModele = new Modele(ADDRESS,PORT);
         Vue laVue = new Vue();
         Controleur leControleur = new Controleur(leModele, laVue);
 
-        Scene scene = new Scene(laVue, 350, 200);
+        Scene scene = new Scene(laVue.getRoot(), 350, 200);
 
         stage.setScene(scene);
         stage.setTitle("Inscription UdeM");
