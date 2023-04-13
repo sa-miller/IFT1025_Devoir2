@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class Vue extends Parent {
-
+    private HBox root;
     private Button charger = new Button("charger");
     private Button envoyer = new Button("envoyer");
     private ChoiceBox session = new ChoiceBox(FXCollections.observableArrayList("Automne","Hiver","Ete"));
@@ -37,7 +37,7 @@ public class Vue extends Parent {
 
 
     public Vue() {
-        HBox root = new HBox();
+        root = new HBox();
         root.getChildren().add(left);
         left.getChildren().add(ldc);
         left.getChildren().add(table);
@@ -85,6 +85,10 @@ public class Vue extends Parent {
     }
 
     public void loadCourses() {
+    }
+
+    public HBox getRoot() {
+        return this.root;
     }
 }
 
