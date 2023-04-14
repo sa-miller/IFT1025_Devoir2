@@ -38,7 +38,7 @@ public class Server {
 
     public Server(int port) throws IOException {
         this.server = new ServerSocket(port, 1);
-        this.handlers = new ArrayList<EventHandler>();
+        this.handlers = new ArrayList<>();
         this.addEventHandler(this::handleEvents);
     }
 
@@ -167,12 +167,13 @@ public class Server {
             do {
                 String s = scan.nextLine();
                 String[] fields = s.split("\t");
-                Course c = new Course(fields[0], fields[1], fields[2]);
+                Course c = new Course(fields[1], fields[0], fields[2]);
                 if (arg.equals(fields[2])) {
                     courseList.add(c);
                 }
             } while (scan.hasNext());
             objectOutputStream.writeObject(courseList);
+            scan.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e){
@@ -187,13 +188,29 @@ public class Server {
      */
     public void handleRegistration() {
         try {
+            final String registrationFilePath = "src/main/java/server/data/inscription.txt";
+
             RegistrationForm registrationForm = (RegistrationForm) objectInputStream.readObject();
             Course course = registrationForm.getCourse();
 
-            FileOutputStream fileOutputStream = new FileOutputStream("src/main/java/server/data/cours.txt");
-            DataOutputStream output = new DataOutputStream(fileOutputStream);
+            FileReader fr = new FileReader(registrationFilePath);
+            BufferedReader reader = new BufferedReader(fr);
 
-            output.writeBytes(course.getSession());
+            String s;
+            StringBuilder previousRegistrations = new StringBuilder();
+            while ((s = reader.readLine()) != null) {
+                previousRegistrations.append(s).append("\n");
+            }
+            reader.close();
+
+            FileWriter fw = new FileWriter(registrationFilePath);
+            BufferedWriter writer = new BufferedWriter(fw);
+
+            writer.append(previousRegistrations + course.getSession() + "\t" + course.getCode() + "\t" +
+                          registrationForm.getMatricule() + "\t" +
+                          registrationForm.getPrenom() + "\t" +
+                          registrationForm.getEmail());
+            writer.close();
         } catch (ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         } catch (IOException ex) {

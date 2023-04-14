@@ -1,1 +1,5 @@
-Automne	IFT2255	12345678	Michalis	Famelis	mfamelis@iro.umontreal.ca
+Automne	IFT1015	c	a	b
+Automne	IFT1015	d	a	c
+Automne	IFT2255	f	a	g
+Automne	IFT1015	12345678	Oussama	Sghaier
+Automne	IFT1015	12345678	Oussama	oussama@umontreal.ca
