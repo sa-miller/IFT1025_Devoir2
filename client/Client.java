@@ -70,7 +70,7 @@ public class Client {
                     }
                 }
 
-                if (courseFound == true) {
+                if (courseFound) {
                     RegistrationForm registrationForm = new RegistrationForm(answers[0], answers[1], answers[2], answers[3], this.course);
                     oos.writeObject("INSCRIRE");
                     oos.writeObject(registrationForm);
@@ -81,9 +81,7 @@ public class Client {
                     System.out.println("Aucun cours correspondant au code donné n'a été trouvé.");
                 }
             }
-            case 3 -> {
-                oos.close();
-            }
+            case 3 -> oos.close();
             default -> System.out.println(invalidChoiceMessage);
         }
 

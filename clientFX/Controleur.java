@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controleur {
-    private Modele modele;
-    private Vue vue;
+    private final Modele modele;
+    private final Vue vue;
 
     public Controleur(Modele m, Vue v) {
         this.modele = m;
@@ -31,10 +31,8 @@ public class Controleur {
     private void charger() throws FileNotFoundException {
         ArrayList courses ;
         try {
-            courses = this.modele.chargeCourses(String.valueOf(this.vue.getSession()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+            courses = this.modele.chargeCourses(String.valueOf(this.vue.getSession().getSelectionModel().getSelectedItem()));
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         this.vue.loadCourses(courses);

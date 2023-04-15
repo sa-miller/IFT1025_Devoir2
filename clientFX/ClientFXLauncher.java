@@ -18,7 +18,7 @@ public class ClientFXLauncher extends Application {
     public void start(Stage stage) throws Exception {
         Modele leModele = new Modele(ADDRESS,PORT);
         Vue laVue = new Vue();
-        Controleur leControleur = new Controleur(leModele, laVue);
+        new Controleur(leModele, laVue);
 
         Scene scene = new Scene(laVue.getRoot(), 350, 200);
 

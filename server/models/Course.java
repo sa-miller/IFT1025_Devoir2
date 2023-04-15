@@ -18,24 +18,12 @@ public class Course implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getSession() {
         return session;
-    }
-
-    public void setSession(String session) {
-        this.session = session;
     }
 
     @Override

@@ -172,6 +172,7 @@ public class Server {
                     courseList.add(c);
                 }
             } while (scan.hasNext());
+            System.out.println(courseList);
             objectOutputStream.writeObject(courseList);
             scan.close();
         } catch (FileNotFoundException e) {
