@@ -20,7 +20,7 @@ public class ClientFXLauncher extends Application {
         Vue laVue = new Vue();
         new Controleur(leModele, laVue);
 
-        Scene scene = new Scene(laVue.getRoot(), 350, 200);
+        Scene scene = new Scene(laVue.getRoot(), 600, 400);
 
         stage.setScene(scene);
         stage.setTitle("Inscription UdeM");
