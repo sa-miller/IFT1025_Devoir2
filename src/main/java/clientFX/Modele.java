@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 
 public class Modele {
+    private Socket client;
     private final String address;
     private final int port;
     public ObjectOutputStream oos ;
@@ -23,11 +24,14 @@ public class Modele {
         this.port = port;
     }
 
-    public ArrayList<Course> chargeCourses(String s) throws IOException, ClassNotFoundException {
-        Socket client = new Socket(address, port);
+    public void connect() throws IOException {
+        client = new Socket(address, port);
         this.oos = new ObjectOutputStream(client.getOutputStream());
         this.ois = new ObjectInputStream(client.getInputStream());
+    }
 
+    public ArrayList<Course> chargeCourses(String s) throws IOException, ClassNotFoundException {
+        connect();
         oos.writeObject("CHARGER " + s);
         oos.flush();
 
@@ -38,10 +42,7 @@ public class Modele {
     }
 
     public void gererInscription(String prenom, String nom, String email, String matricule, String code) throws IOException {
-        Socket client = new Socket(address, port);
-        this.oos = new ObjectOutputStream(client.getOutputStream());
-        this.ois = new ObjectInputStream(client.getInputStream());
-
+        connect();
         boolean courseFound = false;
 
         for (Course course : courses) {
