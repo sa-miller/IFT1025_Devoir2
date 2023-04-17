@@ -11,10 +11,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ *
+ * La classe Controleur qui connecte la Vue et le Modele
+ */
 public class Controleur {
     private final Modele modele;
     private final Vue vue;
 
+    /**
+     * Le consructeur du Controleur
+     *
+     * @param m le modele
+     * @param v la vue
+     */
     public Controleur(Modele m, Vue v) {
         this.modele = m;
         this.vue = v;

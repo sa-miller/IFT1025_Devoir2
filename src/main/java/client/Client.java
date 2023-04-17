@@ -28,9 +28,9 @@ public class Client {
      * Le constructeur du Client qui initialise nos ObjectOuptputStream et OjectInputStream pour communiquer
      * avec le serveur.
      *
-     * @param address : Adresse IP de connexion
-     * @param port : Port sur lequel le client se connecte
-     * @throws IOException : Lancée si une erreur arrive avec les entrées/sorties
+     * @param address Adresse IP de connexion
+     * @param port Port sur lequel le client se connecte
+     * @throws IOException Lancée si une erreur arrive avec les entrées/sorties
      */
     public Client(String address , int port) throws IOException {
         Socket client = new Socket(address, port);
@@ -41,11 +41,11 @@ public class Client {
     /**
      * Méthode principale du client qui assure l'interaction avec le serveur et déconnecte le client au bon moment.
      *
-     * @param nextAction : Entier qui définit la prochaine étape
-     * @param courses : Liste contenant les cours dans cours.txt
-     * @return runArgs : Liste contenant la prochaine action et la liste courses
-     * @throws IOException : Lancée si une erreur arrive avec les entrées/sorties
-     * @throws ClassNotFoundException : Lancée si la classe n'est pas trouvée
+     * @param nextAction Entier qui définit la prochaine étape
+     * @param courses Liste contenant les cours dans cours.txt
+     * @return runArgs Liste contenant la prochaine action et la liste courses
+     * @throws IOException Lancée si une erreur arrive avec les entrées/sorties
+     * @throws ClassNotFoundException Lancée si la classe n'est pas trouvée
      */
 
     public ArrayList<Object> run(int nextAction, ArrayList<Course> courses) throws IOException, ClassNotFoundException {

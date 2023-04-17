@@ -18,6 +18,9 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
+/**
+ * La classe Vue qui est responsable de l'interface graphique
+ */
 public class Vue {
     private final Button charger = new Button("charger");
     private final Button envoyer = new Button("envoyer");
@@ -30,27 +33,60 @@ public class Vue {
     private final TextField nomField = new TextField();
     private final TextField emailField = new TextField();
     private final TextField matriculeField = new TextField();
+    Alert alert = new Alert(Alert.AlertType.NONE);
 
+    /**
+     * getter du prénom
+     *
+     * @return le prénom
+     */
     public TextField getPrenomField() {
         return prenomField;
     }
+
+    /**
+     * getter du nom
+     *
+     * @return le nom
+     */
 
     public TextField getNomField() {
         return nomField;
     }
 
+    /**
+     * getter d'email
+     *
+     * @return l'email
+     */
+
     public TextField getEmailField() {
         return emailField;
     }
+
+    /**
+     * getter de la matricule
+     *
+     * @return la matricule
+     */
 
     public TextField getMatriculeField() {
         return matriculeField;
     }
 
+    /**
+     * getter de la table
+     *
+     * @return la table
+     */
+
     public TableView<Course> getTable() {
         return table;
     }
 
+    /**
+     * méthode qui implémente les éléments de l'interface graphique
+     */
     public Vue() {
         session.setValue("Automne");
 
@@ -129,22 +165,48 @@ public class Vue {
 
         new BackgroundFill(Color.YELLOW,CornerRadii.EMPTY, Insets.EMPTY);
     }
+    /**
+     * getter du boutton charger
+     *
+     * @return le boutton charger
+     */
+
     public Button getCharger() {
         return charger;
     }
 
+    /**
+     * getter du boutton envoyer
+     *
+     * @return du boutton envoyer
+     */
     public Button getEnvoyer() {
         return envoyer;
     }
 
+    /**
+     * getter de la racine
+     *
+     * @return la racine
+     */
     public HBox getRoot() {
         return root;
     }
+    /**
+     * getter de la session choisie
+     *
+     * @return la session choisie
+     */
 
     public ChoiceBox getSession() {
         return session;
     }
 
+    /**
+     * méthode qui met les cours dans la table
+     *
+     * @param courses liste des cours a mettre dans la table
+     */
     public void loadCourses(ArrayList courses) {
         ObservableList<Course> data = FXCollections.observableArrayList(courses);
         for (int i=0 ; i<courses.size() ; i++){
@@ -154,30 +216,60 @@ public class Vue {
         table.setItems(data);
         table.setStyle("-fx-border-color: teal;");
     }
-
+    /**
+     * méthode qui change les bordures de la table dans le cas ou c'est faux
+     */
     public void tableError() {
         table.setStyle("-fx-border-color: red;");
     }
 
+    /**
+     * méthode qui change les bordures d'un TextField dans le cas ou c'est faux
+     *
+     * @param textFields la liste des TextField pour lesquels on veut changer les bordures
+     */
     public void textFieldsError(ArrayList<TextField> textFields) {
         for (int i = 0; i < textFields.size(); i++) {
             textFields.get(i).setStyle("-fx-border-color: red;");
         }
     }
 
+    /**
+     * méthode qui change les bordures de la table dans le cas ou c'est correct
+     */
+
     public void correctTable() {
         table.setStyle("-fx-border-color: darkgrey;");
     }
+
+    /**
+     * méthode qui change les bordures d'un TextField dans le cas ou c'est correct
+     *
+     * @param textField le TextField pour lequel on veut changer les bordures
+     */
     public void correctTextField(TextField textField) {
         textField.setStyle("-fx-border-color: darkgrey;");
     }
 
+    /**
+     * méthode qui sort un alert dans le cas d'une erreur
+     *
+     * @param message le message a alerté
+     */
     public void errorMessage(String message) {
-        System.out.println(message);
+        alert.setAlertType(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.show();
     }
-
+    /**
+     * méthode qui sort un alert dans le cas ou c'est correct
+     *
+     * @param message le message a alerté
+     */
     public void confirmationMessage(String message) {
-        System.out.println(message);
+        alert.setAlertType(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(message);
+        alert.show();
     }
 }
 

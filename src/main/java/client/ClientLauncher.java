@@ -4,10 +4,25 @@ import main.java.server.models.Course;
 
 import java.util.ArrayList;
 
+/**
+ * La classe qui démarre le client
+ */
 public class ClientLauncher {
 
+    /**
+     * Port sur lequel le client se connecte
+     */
     public final static int PORT = 1337;
+    /**
+     * Adresse IP de connexion
+     */
     public final static String ADDRESS = "127.0.0.1";
+
+    /**
+     * La méthode main de la classe Client launcher
+     *
+     * @param args
+     */
 
     public static void main(String[] args) {
         Client client;
