@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 
 public class Modele {
-    private Socket client;
     private final String address;
     private final int port;
     public ObjectOutputStream oos ;
@@ -19,13 +18,13 @@ public class Modele {
     private Course course;
     private ArrayList<Course> courses;
 
-    public Modele(String address , int port) throws IOException {
+    public Modele(String address , int port) {
         this.address = address;
         this.port = port;
     }
 
     public void connect() throws IOException {
-        client = new Socket(address, port);
+        Socket client = new Socket(address, port);
         this.oos = new ObjectOutputStream(client.getOutputStream());
         this.ois = new ObjectInputStream(client.getInputStream());
     }
@@ -41,7 +40,7 @@ public class Modele {
         return courses;
     }
 
-    public void gererInscription(String prenom, String nom, String email, String matricule, String code) throws IOException {
+    public boolean gererInscription(String prenom, String nom, String email, String matricule, String code) throws IOException {
         connect();
         boolean courseFound = false;
 
@@ -59,12 +58,12 @@ public class Modele {
             oos.writeObject(registrationForm);
             oos.flush();
 
-            System.out.println("\nFélicitations! Inscription réussie de " + prenom + " au cours " + code + ".");
-
             oos.close();
         } else {
-            System.out.println("Aucun cours correspondant au code donné n'a été trouvé.");
+            return false;
         }
+
+        return true;
     }
 }
 

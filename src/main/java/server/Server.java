@@ -31,8 +31,9 @@ public class Server {
     /**
      *
      * Constructeur de la classe Server
-     * @param port: Port sur lequel le serveur écoute
-     * @throws IOException: Lancée si une erreur arrive avec les entrées/sorties
+     *
+     * @param port : Port sur lequel le serveur écoute
+     * @throws IOException : Lancée si une erreur arrive avec les entrées/sorties
      *
      */
 
@@ -45,7 +46,8 @@ public class Server {
     /**
      *
      * La méthode addEventHandler ajoute un EventHandler à la liste handlers
-     * @param h: Instance du type EventHandler qui serait ajoutée
+     *
+     * @param h : Instance du type EventHandler qui serait ajoutée
      *
      */
 
@@ -89,8 +91,9 @@ public class Server {
      * La méthode listen vérifie si la ligne de commande n'est pas null. Si c'est le cas, elle appelle la méthode
      * processCommandLine, découpe le Pair retourné aux variables cmd(Key) et arg(Value),
      * et passe cmd et arg à la méthode privée alertHandlers.
-     * @throws IOException: lancée si une erreur arrive avec les entrées/sorties
-     * @throws ClassNotFoundException: lancée si on essaye d'accéder une classe qui n'existe pas
+     *
+     * @throws IOException : lancée si une erreur arrive avec les entrées/sorties
+     * @throws ClassNotFoundException : lancée si on essaye d'accéder une classe qui n'existe pas
      *
      */
 
@@ -108,7 +111,8 @@ public class Server {
      *
      * La méthode Pair découpe la commande donnée et donne à la variable cmd le premier mot(= séries de caractères
      * séparés par des espaces) et le reste serait assigné à la variable args
-     * @param line: ligne de texte à découper
+     *
+     * @param line : ligne de texte à découper
      * @return Pair des deux variables cmd et args
      *
      */
@@ -123,7 +127,8 @@ public class Server {
     /**
      *
      * La méthode disconnect est appelée si listen a été épuisée et ferme les Streams et le client.
-     * @throws IOException: Lancée si une erreur arrive avec les entrées/sorties
+     *
+     * @throws IOException : Lancée si une erreur arrive avec les entrées/sorties
      *
      */
 
@@ -138,8 +143,9 @@ public class Server {
      * La méthode handleEvents va voir si cmd passée est soit REGISTER_COMMAND, soit LOAD_COMMAND. Si c'est le
      * cas, elle va appeler la méthode correspondante (handleLoadCourses et handleRegistration respectivement)
      * en passant arg si nécessaire (dans le cas de handleLoadCourses).
-     * @param cmd: Commande du event spécifié
-     * @param arg: Argument de la commande de l'event spécifié
+     *
+     * @param cmd : Commande du event spécifié
+     * @param arg : Argument de la commande de l'event spécifié
      *
      */
 
@@ -156,7 +162,8 @@ public class Server {
      La méthode filtre les cours par la session spécifiée en argument.
      Ensuite, elle renvoie la liste des cours pour une session au client en utilisant l'objet 'objectOutputStream'.
      La méthode gère les exceptions si une erreur se produit lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.
-     @param arg la session pour laquelle on veut récupérer la liste des cours
+
+     @param arg : Session pour laquelle on veut récupérer la liste des cours
 
      */
 
@@ -172,7 +179,6 @@ public class Server {
                     courseList.add(c);
                 }
             } while (scan.hasNext());
-            System.out.println(courseList);
             objectOutputStream.writeObject(courseList);
             scan.close();
         } catch (FileNotFoundException e) {

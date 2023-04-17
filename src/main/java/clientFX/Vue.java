@@ -1,4 +1,5 @@
 package main.java.clientFX;
+import main.java.server.models.Course;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,9 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import main.java.server.models.Course;
-
-
+import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,7 @@ public class Vue {
     private final Button charger = new Button("charger");
     private final Button envoyer = new Button("envoyer");
     private final ChoiceBox session = new ChoiceBox(FXCollections.observableArrayList("Automne","Hiver","Ete"));
-    private final TableView<Course> table = new TableView<Course>();
+    private final TableView<Course> table = new TableView<>();
     private final TableColumn codeColumn = new TableColumn("Code");
     private final TableColumn coursColumn = new TableColumn("Cours");
     private final HBox root = new HBox();
@@ -53,9 +52,10 @@ public class Vue {
     }
 
     public Vue() {
+        session.setValue("Automne");
+
         root.setStyle("-fx-background-color: #e5e1af");
         VBox left = new VBox();
-        left.setSpacing(10.0);
         root.getChildren().add(left);
 
         Text ldc = new Text("Liste de cours");
@@ -63,15 +63,16 @@ public class Vue {
         left.setAlignment(Pos.CENTER);
         left.getChildren().add(table);
         table.setEditable(true);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         table.getColumns().addAll(codeColumn, coursColumn);
 
         Separator sep1 = new Separator();
         left.getChildren().add(sep1);
 
-        HBox hBox = new HBox();
+        HBox hBox = new HBox(10,session,charger);
         left.getChildren().add(hBox);
-        hBox.getChildren().add(session);
-        hBox.getChildren().add(charger);
+        hBox.setPadding(new Insets(10));
+        hBox.setAlignment(Pos.CENTER);
 
         Separator sep2 = new Separator();
         root.getChildren().add(sep2);
@@ -79,7 +80,6 @@ public class Vue {
 
         VBox right = new VBox();
         root.getChildren().add(right);
-        right.setSpacing(10.0);
 
         Text fi = new Text("Formulaire d'inscription");
         right.getChildren().add(fi);
@@ -87,6 +87,8 @@ public class Vue {
 
         HBox prenomBox = new HBox();
         right.getChildren().add(prenomBox);
+        prenomBox.setPadding(new Insets(10));
+        prenomBox.setAlignment(Pos.CENTER);
 
         Text prenom = new Text("Prénom");
         prenomBox.getChildren().add(prenom);
@@ -95,6 +97,8 @@ public class Vue {
 
         HBox nomBox = new HBox();
         right.getChildren().add(nomBox);
+        nomBox.setPadding(new Insets(10));
+        nomBox.setAlignment(Pos.CENTER);
 
         Text nom = new Text("Nom");
         nomBox.getChildren().add(nom);
@@ -103,6 +107,8 @@ public class Vue {
 
         HBox emailBox = new HBox();
         right.getChildren().add(emailBox);
+        emailBox.setPadding(new Insets(10));
+        emailBox.setAlignment(Pos.CENTER);
 
         Text email = new Text("Email");
         emailBox.getChildren().add(email);
@@ -111,6 +117,8 @@ public class Vue {
 
         HBox matriculeBox = new HBox();
         right.getChildren().add(matriculeBox);
+        matriculeBox.setPadding(new Insets(10));
+        matriculeBox.setAlignment(Pos.CENTER);
 
         Text matricule = new Text("Matricule");
         matriculeBox.getChildren().add(matricule);
@@ -144,6 +152,32 @@ public class Vue {
             coursColumn.setCellValueFactory(new PropertyValueFactory<Course,String>("name"));
         }
         table.setItems(data);
+        table.setStyle("-fx-border-color: teal;");
+    }
+
+    public void tableError() {
+        table.setStyle("-fx-border-color: red;");
+    }
+
+    public void textFieldsError(ArrayList<TextField> textFields) {
+        for (int i = 0; i < textFields.size(); i++) {
+            textFields.get(i).setStyle("-fx-border-color: red;");
+        }
+    }
+
+    public void correctTable() {
+        table.setStyle("-fx-border-color: darkgrey;");
+    }
+    public void correctTextField(TextField textField) {
+        textField.setStyle("-fx-border-color: darkgrey;");
+    }
+
+    public void errorMessage(String message) {
+        System.out.println(message);
+    }
+
+    public void confirmationMessage(String message) {
+        System.out.println(message);
     }
 }
 

@@ -10,6 +10,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * La classe Client représente le client qui se connecte au serveur et qui lui envoie les requêtes correspondantes.
+ */
+
 public class Client {
     private final ObjectOutputStream oos ;
     private final ObjectInputStream ois;
@@ -20,11 +24,29 @@ public class Client {
     private final String invalidChoiceMessage = "Veuillez entrer un entier positif valide.";
     private Course course;
 
+    /**
+     * Le constructeur du Client qui initialise nos ObjectOuptputStream et OjectInputStream pour communiquer
+     * avec le serveur.
+     *
+     * @param address : Adresse IP de connexion
+     * @param port : Port sur lequel le client se connecte
+     * @throws IOException : Lancée si une erreur arrive avec les entrées/sorties
+     */
     public Client(String address , int port) throws IOException {
         Socket client = new Socket(address, port);
         this.oos = new ObjectOutputStream(client.getOutputStream());
         this.ois = new ObjectInputStream(client.getInputStream());
     }
+
+    /**
+     * Méthode principale du client qui assure l'interaction avec le serveur et déconnecte le client au bon moment.
+     *
+     * @param nextAction : Entier qui définit la prochaine étape
+     * @param courses : Liste contenant les cours dans cours.txt
+     * @return runArgs : Liste contenant la prochaine action et la liste courses
+     * @throws IOException : Lancée si une erreur arrive avec les entrées/sorties
+     * @throws ClassNotFoundException : Lancée si la classe n'est pas trouvée
+     */
 
     public ArrayList<Object> run(int nextAction, ArrayList<Course> courses) throws IOException, ClassNotFoundException {
         switch (nextAction) {
@@ -49,15 +71,21 @@ public class Client {
             }
             case 2 -> {
                 String[] answers = new String[5];
-                String[] messages = {"Veuillez saisir votre prénom: ",
-                        "Veuillez saisir votre nom: ",
-                        "Veuillez saisir votre email: ",
-                        "Veuillez saisir votre matricule: ",
-                        "Veuillez saisir le code du cours: "};
+
+                String[] messages = {"Veuillez saisir votre prénom: ", "Veuillez saisir votre nom: ", "Veuillez saisir votre email: ", "Veuillez saisir votre matricule: ", "Veuillez saisir le code du cours: "};
+                String[] regex = {"\\S+", "\\S+", "\\S+@\\S+.\\S+", "[0-9]{8}", "\\S+"};
+                String[] erreurs = {"un prénom", "un nom", "une adresse email", "un matricule", "un code de cours"};
+
                 for (int i = 0; i < messages.length; i++) {
                     String message = messages[i];
                     System.out.print(message);
-                    answers[i] = scanner.nextLine();
+                    String answer = scanner.nextLine();
+                    if (!answer.matches(regex[i])) {
+                        System.out.println("Veuillez entrer " + erreurs[i] + " valide.");
+                        i -= 1;
+                    } else {
+                        answers[i] = answer;
+                    }
                 }
 
                 boolean courseFound = false;
@@ -104,6 +132,12 @@ public class Client {
         return runArgs;
     }
 
+    /**
+     * Méthode qui doit spécifier le trimestre en cours
+     *
+     * @param temp entier qui spécifie le trimestre
+     */
+
     public void argValue(int temp) {
         switch (temp) {
             case 1 -> arg = "Automne";
@@ -112,6 +146,12 @@ public class Client {
             default -> {arg = ""; System.out.println(invalidChoiceMessage);}
         }
     }
+
+    /**
+     * Méthode qui doit imprimer l'affichage des cours dans le terminal
+     *
+     * @param courses la liste des cours dans cours.txt
+     */
 
     public void printCourses(ArrayList<Course> courses) {
         for (int i = 0; i < courses.size(); i++) {
